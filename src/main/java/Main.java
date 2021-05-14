@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,13 +28,14 @@ public class Main {
                         final Integer countryCode2 = new Integer(digitsOnly.substring(0,1));
                         final Integer countryCode3 = new Integer(digitsOnly.substring(0,2));
 
-                        countryCodes.keySet().stream().filter(code -> code.equals(countryCode1) || code.equals(countryCode2) || code.equals(countryCode3))
-                                .findFirst();
-
-                        //countryCodes.keySet().stream().anyMatch(possibleCountryCodes::contains) ? answer.put() : continue;
+                       Optional<Integer> countryCode = countryCodes.keySet().stream().filter(code -> code.equals(countryCode1) || code.equals(countryCode2) || code.equals(countryCode3)).findFirst();
+                       if(countryCode.isPresent()){
+                           answer.put(countryCodes.get(countryCode.get()),answer.get(countryCodes.get(countryCode.get())!= null ? countryCodes.get(countryCode.get())+1 : 1));
+                       }
                     }
                 }
             }
+
         } catch (FileNotFoundException e) {
             System.out.println("coutryCodes.txt not found. It need to be placed in the same directory of the jar file.");
         }catch (IOException e) {
